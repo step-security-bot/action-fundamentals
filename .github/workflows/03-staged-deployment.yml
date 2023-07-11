@@ -1,4 +1,4 @@
-name: Staged Deployment
+name: 03 - Staged Deployment
 
 on:
   workflow_dispatch:
