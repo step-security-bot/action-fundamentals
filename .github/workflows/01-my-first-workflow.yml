@@ -10,15 +10,23 @@ on:
     - cron: '15 6 * * 0'
   workflow_dispatch:
   
+permissions:
+  contents: read
+
 jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+
       - run: |
           echo "🎉 The job was triggered by event: ${{ github.event_name }}"
           echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ."
 
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
 
       - name: List files in the repository
         run: |

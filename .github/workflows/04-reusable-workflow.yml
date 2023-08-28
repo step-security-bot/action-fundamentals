@@ -13,12 +13,20 @@ on:
         description: 'The time when greeting.'
         value: ${{ jobs.reusable-job.outputs.current-time }}
 
+permissions:
+  contents: read
+
 jobs:
   reusable-job:
     runs-on: macos-latest
     outputs:
       current-time: ${{ steps.time.outputs.time }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+
       - name: Greet someone
         run: echo "Hello ${{ inputs.who-to-greet }}"
       - name: Set time

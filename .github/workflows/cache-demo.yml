@@ -2,15 +2,23 @@ name: Cache Demo
 
 on: [workflow_dispatch, push]
 
+permissions:
+  contents: read
+
 jobs:
   cache:
     name: Demo Cache
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Cache
-        uses: actions/cache@v1.2.1
+        uses: actions/cache@f5ce41475b483ad7581884324a6eca9f48f8dcc7 # v1.2.1
         id: cache
         with:
           path: cache-demo

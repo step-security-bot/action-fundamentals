@@ -9,10 +9,18 @@ on:
         required: true
         default: Test
 
+permissions:
+  contents: read
+
 jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+
       - run: echo "🏗️ Building..."
 
   Test:
@@ -21,6 +29,11 @@ jobs:
     needs: Build
     environment: Test
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+
       - run: echo "🧪 Testing..."
 
   Load-Test:
@@ -29,6 +42,11 @@ jobs:
     needs: Build
     environment: Load-Test
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+
       - run: |
           echo "🧪 Testing..."
           sleep 15
@@ -41,6 +59,11 @@ jobs:
       url: https://xpirit.com
     if: github.event.inputs.environment == 'Production'
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+
       - run: |
           echo "🚀 Step 1..."
           sleep 10

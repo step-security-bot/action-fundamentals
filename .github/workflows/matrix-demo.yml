@@ -2,6 +2,9 @@ name: Matrix Demo
 
 on: [workflow_dispatch]
 
+permissions:
+  contents: read
+
 jobs:
   matrix-demo:
     name: Matrix Demo
@@ -11,5 +14,10 @@ jobs:
         browser: [chrome, firefox, safari]
         connection: [4G, 5G, 6G]
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+
       - run: echo "Browser ${{ matrix.browser }}"
       - run: echo "Conection ${{ matrix.connection }}"
